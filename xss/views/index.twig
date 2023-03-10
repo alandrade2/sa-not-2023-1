@@ -3,12 +3,19 @@
 {% block body %}
 
 
-  <h1>Texte de XSS</h1>
-<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore culpa, fugiat reprehenderit suscipit dolorum laudantium exercitationem nobis nesciunt ex, iure voluptas. Recusandae commodi delectus, aspernatur natus voluptatibus sapiente suscipit? Possimus!</p>
+  <h1>Ataque XSS</h1>
 
-<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus consectetur vitae sint error ipsa? Ad, rem. Minima, quae voluptas laudantium, vel veniam esse, accusamus quibusdam voluptatum ipsam commodi aliquam ea?</p>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum cupiditate nam tempora aliquid rerum quisquam similique ducimus corporis, explicabo inventore nihil obcaecati quae. Explicabo facilis deserunt, iure dicta velit illo.</p>
+  <form method="POST" action="/comments">
+    <label>
+      <span> Comentarios</span> <br>
+      <textarea name="comment" rows="4"></textarea>
+      <br>
+      <input type="submit" value="Enviar">
+    </label>
+  </form>
+  <div>
+    {{comments}}
+  </div>
 
 {% endblock %}
 
