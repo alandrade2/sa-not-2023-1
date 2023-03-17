@@ -1,6 +1,7 @@
-let normal = true
+let normal = false
+
 function start() {
-  
+  // const audio =   
     setInterval(() => {
     const body = document.body
     if(normal) {

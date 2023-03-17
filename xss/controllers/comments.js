@@ -7,7 +7,7 @@ controller.create = async (req, res) => {
             // salva o comentario no BD
             await conn.query(
                 `insert into comments(comment) values ($1)`,
-                [req.body.comment]
+                [req.sanitize(req.body.comment)]
                 )
 
                 // redireciona de volta para o formulario
