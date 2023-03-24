@@ -10,26 +10,38 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 // Conecta ao banco de dados
-const dbConn = require('./config/database');
+const dbConn = require('./config/database')
 
-const expressSession = require('express-session');
+const expressSession = require('express-session')
 const pgSession = require('connect-pg-simple')(expressSession)
 
 var app = express();
 
-app.use(expressSession({
+
+const sessionConfig = {
   store: new pgSession({
     pool: dbConn
   }),
+  name: '$DATA$',
   secret: process.env.COOKIE_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 dias
-    secure: true,
+    maxAge : 7 * 24 * 60 * 60 * 1000,  // 7 dias
+    // secure: true,
     httpOnly: true
-  }
-}))
+  }    
+}
+
+
+// se for ambiente de produção, habilita a confiança no primeiro proxy e cookies seguros
+if(app.get('env') === 'production' ) {
+   app.set('trust proxy', 1)
+   sessionConfig.cookie.secure = true
+}
+
+
+app.use(expressSession(sessionConfig));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
