@@ -2,52 +2,67 @@
 
 {% block body %}
 
-{% if severity == 'success' %}
+  {% if level == 'success' %}
+    <style>
+      .msg {
+        border: 1px solid green;
+        background-color:lightgreen;
+        border-radius: 8px;
+        padding: 8px;
+      }
+    </style>
+  {% elseif level == 'error' %}
+    <style>
+      .msg {
+        border: 1px solid red;
+        background-color:mistyrose;
+        border-radius: 8px;
+        padding: 8px;
+      }
+    </style>
+  {% else %}
+    <style>
+      .msg {
+        border: 1px solid navy;
+        background-color:powderblue;
+        border-radius: 8px;
+        padding: 8px;
+      }
+    </style>
+  {% endif %}
 
-<style>
-  .msg { 
-    border: 1 px solid green;
-    background-color: lightgreen;
-    border-radius: 8px;
-    padding: 8px;
-  }
-</style>
-{% endif %}
+  <div class="msg">
+    <h1>
+      {% if level == 'success' %}
+        Operação bem sucedida
+      {% elseif == 'error' %}
+        Erro
+      {% else %}
+        Informação
+      {% endif %}
+    </h1>
+    <span> {{message}} </span>
+  </div>
 
-{% if severity == 'error' %}
+  <div id="display-cookies" style="visibility: hidden">
+    <h2>Cookies da página</h2>
+    <pre id="cookies"></pre>
+  </div>
 
-<style>
-  .msg { 
-    border: 1 px solid red;
-    background-color: mistyrose;
-    border-radius: 8px;
-    padding: 8px;
-  }
-</style>
-{% else %}
-<style>
-  .msg { 
-    border: 1 px solid navy;
-    background-color: powderblue;
-    border-radius: 8px;
-    padding: 8px;
-  }
-</style>
-{% endif %}
+  <script>
+    const displayCookies = document.getElementById('display-cookies')
+    const docCookie = document.cookie
+    if(docCookie) {
+      displayCookies.style.visibility = 'visible'
+      const cookies = document.getElementById('cookies')
+      cookies.textContent = docCookie
+    }
+  </script>
 
-
-<div class="msg">
-  <h1>
-    {% if level == 'success' %}
-    Operação bem sucedida
-    {% elseif level == 'error' %}
-     Erro
-     {% else %}
-       Informação
-     {% endif %}
-
-     <span>{{ message }}</span>
-  </h1>
- </div>
+  {% if redirectUrl %}
+    <script>
+      setTimeout(() => window.location.href = '{{ redirectUrl }}', 3000)
+    </script>
+  {% endif %}
 
 {% endblock %}
