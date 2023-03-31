@@ -62,7 +62,11 @@
   {% if redirectUrl %}
     <script>
       setTimeout(() => window.location.href = '{{ redirectUrl }}', 3000)
-    </script>
+    </script>=
+  {% else %}    
+  <script>
+    setTimeout(() => window.location.href = '/', 3000)
+  </script>
   {% endif %}
 
 {% endblock %}
